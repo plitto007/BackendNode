@@ -1,0 +1,5 @@
+
+api: uwsgi --http 0.0.0.0:5000 --http-processes 2 --gevent 100 --workers 5 --master --max-requests 500 --thunder-lock --listen 4096 --post-buffering 4192 --module app.main:application
+#api: uwsgi --http 0.0.0.0:5000 --http-processes 2 --enable-threads --processes 5 --threads 8 --master --max-requests 300 --thunder-lock --listen 4096 --post-buffering 4192 --module app.main:application
+#api: uwsgi --http 0.0.0.0:8088 --enable-threads --processes 4 --threads 8 --master --max-requests 300 --thunder-lock --listen 4096 --post-buffering 4192 --module app.main:application
+#api: uwsgi --ini  uwsgi_dev.ini

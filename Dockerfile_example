@@ -1,0 +1,33 @@
+FROM python:3.6.9
+RUN apt-get update
+# TODO: this package for debug networking
+RUN apt-get install -y telnet iputils-ping
+#RUN apt-get update
+#RUN apt-get install build-essential python-pip libffi-dev python-dev python3-dev libpq-dev
+
+COPY course/requirements.txt /
+RUN pip3 install --no-cache-dir -r /requirements.txt
+
+#RUN mkdir -p /scripts
+#COPY course-beta/install.sh /scripts/install.sh
+#WORKDIR /app
+#ENTRYPOINT ["/scripts/install.sh"]
+RUN mkdir -p /app
+WORKDIR /app
+COPY course /app
+
+#EXPOSE 5000
+
+ENV C_FORCE_ROOT="true"
+
+# NOTE: this line for debuging
+#CMD ["bash", "-c", "while true; do echo; sleep 2; done"]
+
+ENV APP_ENV=dev
+RUN export APP_ENV=dev && echo "$APP_ENV"
+CMD ["honcho", "start"]
+COPY course/init-db.sh /app/init-db.sh
+#RUN /app/init-db.sh
+RUN chmod +x /app/init-db.sh
+#RUN /app/init-db.sh
+#CMD [ "/bin/bash", "/app/init-db.sh" ]

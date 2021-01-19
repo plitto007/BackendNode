@@ -1,0 +1,24 @@
+course:
+        restart: always
+        build:
+            context: .
+            dockerfile: course/Dockerfile
+        image: kidssy/course-api:0.1.0
+        #env_file: course/conf/dev.ini
+        networks:
+            - internal-network
+        hostname: course-api
+        # ports:
+        #     - 5007:5000
+        volumes:
+            - ./course:/app
+        depends_on:
+            - course-db
+            - pgbouncer-course-db
+        # command: 
+        #     - init-db.sh11.7
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
