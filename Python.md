@@ -255,3 +255,28 @@ services:
     ports: 
      - "80:80"
 ```
+
+# Python-uwsgi: Connection reset by peer
+* in setting of uwsgi (eg: app.ini)
+```
+[uwsgi]
+wsgi-file = run.py
+callable = app
+http = :5000
+# http-workers = 2
+# http-buffer-size = 32768
+processes = 8
+threads = 4
+master = true
+chmod-socket = 660
+vacuum = true
+die-on-term = true
+listen = 1024
+# harakiri=50
+# offload-threads = 4
+# enable-threads = true
+# buffer-size = 32768
+# post-buffering = 1
+```
+
+The point is increase processes and threads
